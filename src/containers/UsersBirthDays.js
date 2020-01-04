@@ -1,5 +1,8 @@
 import React, {Component} from "react";
 
+import TabBar from "../components/tabbar/TabBar";
+import TabBarItem from "../components/tabbar/TabBarItem";
+
 const PATH = 'https://yalantis-react-school.herokuapp.com/api/task0/users'
 
 class UsersBirthDays extends Component {
@@ -40,14 +43,16 @@ class UsersBirthDays extends Component {
 
     render() {
         const usersMap = this.mapByMonth(this.state.users)
+        // console.log(usersMap)
 
-        return <ul>
+        return <TabBar>
             {Object.keys(usersMap)
-                .map((month) => (<li key={month}>
-                    <div>{month} {usersMap[month].length}</div>
-                    <ul>{this.renderUsers(usersMap[month])}</ul>
-                </li>))}
-        </ul>
+                .map((month) => (
+                    <TabBarItem label={month} key={month}>
+                        {this.renderUsers(usersMap[month])}
+                    </TabBarItem>
+                ))}
+        </TabBar>
     }
 }
 
