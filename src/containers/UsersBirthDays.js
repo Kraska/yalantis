@@ -19,9 +19,8 @@ class UsersBirthDays extends Component {
     }
 
     mapByMonth(users) {
-        let usersMap = {}
         if (users && users.length) {
-            usersMap = users
+            return users
                 .reduce(
                     (map, user) => {
                         const { dob } = user
@@ -31,8 +30,9 @@ class UsersBirthDays extends Component {
                     {}
                 )
         }
-        return usersMap
+        return {}
     }
+
 
     renderUsers(users = []) {
         // console.log(users)
@@ -45,13 +45,12 @@ class UsersBirthDays extends Component {
         const usersMap = this.mapByMonth(this.state.users)
         // console.log(usersMap)
 
-        return <TabBar>
-            {Object.keys(usersMap)
-                .map((month) => (
-                    <TabBarItem label={month} key={month}>
-                        {this.renderUsers(usersMap[month])}
-                    </TabBarItem>
-                ))}
+        return <TabBar className="vertical">
+            {Object.keys(usersMap).map((month) => (
+                <TabBarItem label={month} key={month}>
+                    {this.renderUsers(usersMap[month])}
+                </TabBarItem>
+            ))}
         </TabBar>
     }
 }

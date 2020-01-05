@@ -31,24 +31,27 @@ class TabBar extends Component {
 
     render() {
         const { children, className, ...attrs } = this.props
-        const classes = classNames(className, 'tab-bar', 'vertical')
+        const classes = classNames(className, 'tab-bar')
 
-        return (<div className={classes} {...attrs}>
-            <div className="tab-bar-nav">{this.renderNav(children)}</div>
-            <div className="tab-container">
-                {React.Children.map(
-                    children,
-                    item => (<TabBarItem
-                        key={item.props.label}
-                        label={item.props.label}
-                        activeTab={this.state.activeTab}
-                    >
-                        {item.props.children}
-                    </TabBarItem>
-                    )
-                )}
+        return (
+            <div className={classes} {...attrs}>
+                <div className="tab-bar-nav">{this.renderNav(children)}</div>
+                <div className="tab-container">
+                    {React.Children.map(
+                        children,
+                        item => (
+                            <TabBarItem
+                                key={item.props.label}
+                                label={item.props.label}
+                                activeTab={this.state.activeTab}
+                            >
+                                {item.props.children}
+                            </TabBarItem>
+                        )
+                    )}
+                </div>
             </div>
-        </div>);
+        );
     }
 
 
