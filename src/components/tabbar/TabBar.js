@@ -39,15 +39,15 @@ class TabBar extends Component {
                 <div className="tab-container">
                     {React.Children.map(
                         children,
-                        item => (
-                            <TabBarItem
-                                key={item.props.label}
-                                label={item.props.label}
-                                activeTab={this.state.activeTab}
-                            >
-                                {item.props.children}
-                            </TabBarItem>
-                        )
+                        item => {
+                            const { label } = item.props
+                            const { activeTab } = this.state
+                            return (
+                                <TabBarItem key={label} label={label} activeTab={activeTab}>
+                                    {item.props.children}
+                                </TabBarItem>
+                            )
+                        }
                     )}
                 </div>
             </div>
@@ -70,13 +70,21 @@ class TabBar extends Component {
 
         return React.Children.map(
             children,
-            ({props: {label}}) => (
-                <TabBarNav
-                    key={label}
-                    label={label}
-                    className={activeTab === label ? 'active' : ''}
-                    onChangeActiveTab={e => this.onChangeActiveTab(label)} />
-            )
+            ({ props: { label, navClassName } }) => {
+
+                const classes = classNames(
+                    activeTab === label ? 'active' : '',
+                    navClassName
+                )
+
+                return (
+                    <TabBarNav
+                        key={label}
+                        label={label}
+                        className={classes}
+                        onChangeActiveTab={e => this.onChangeActiveTab(label)}/>
+                )
+            }
         )
     }
 

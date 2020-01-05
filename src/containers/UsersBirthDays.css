@@ -1,0 +1,44 @@
+.nav-item.grey {
+    background-color: #b1bbc9;
+    border-bottom-color: transparent;
+    color: #FFF;
+}
+.nav-item.grey.active {
+    background-color: #979ea8;
+    border-bottom-color: transparent;
+    color: #FFF;
+}
+
+.nav-item.blue {
+    background-color: #85d1ed;
+    border-bottom-color: transparent;
+    color: #FFF;
+}
+.nav-item.blue.active {
+    background-color: #5ab1d1;
+    border-bottom-color: transparent;
+    color: #FFF;
+}
+
+.nav-item.green {
+    background-color: #71c974;
+    border-bottom-color: transparent;
+    color: #FFF;
+}
+.nav-item.green.active {
+    background-color: #56a359;
+    border-bottom-color: transparent;
+    color: #FFF;
+}
+
+.nav-item.red {
+    background-color: #f28392;
+    border-bottom-color: transparent;
+    color: #FFF;
+}
+.nav-item.red.active {
+    background-color: #e85f72;
+    border-bottom-color: transparent;
+    color: #FFF;
+}
+

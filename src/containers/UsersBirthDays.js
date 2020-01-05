@@ -2,6 +2,8 @@ import React, {Component} from "react";
 
 import TabBar from "../components/tabbar/TabBar";
 import TabBarItem from "../components/tabbar/TabBarItem";
+import './UsersBirthDays.css'
+
 
 const PATH = 'https://yalantis-react-school.herokuapp.com/api/task0/users'
 
@@ -45,13 +47,22 @@ class UsersBirthDays extends Component {
         const usersMap = this.mapByMonth(this.state.users)
         // console.log(usersMap)
 
-        return <TabBar className="vertical">
-            {Object.keys(usersMap).map((month) => (
-                <TabBarItem label={month} key={month}>
-                    {this.renderUsers(usersMap[month])}
-                </TabBarItem>
-            ))}
-        </TabBar>
+        return (
+            <TabBar className="vertical">
+                {Object.keys(usersMap).map((month) => (
+                    <TabBarItem label={month} key={month} navClassName={this.navClassName(usersMap[month].length)}>
+                        {this.renderUsers(usersMap[month])}
+                    </TabBarItem>
+                ))}
+            </TabBar>
+        )
+    }
+
+    navClassName(count) {
+        if (count <= 2) return 'grey'
+        else if (count > 2 && count <= 6) return 'blue'
+        else if (count > 6 && count <= 10) return 'green'
+        else return 'red'
     }
 }
 
