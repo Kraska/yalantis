@@ -11,12 +11,14 @@ class TabBar extends Component {
 
     static propTypes = {
         className: PropTypes.string,
-        children: PropTypes.node
+        children: PropTypes.node,
+        changeByMouseMove: PropTypes.bool
     }
 
     static defaultProps = {
         className: '',
-        children: null
+        children: null,
+        changeByMouseMove: false
     }
 
     state = {
@@ -30,12 +32,12 @@ class TabBar extends Component {
 
 
     render() {
-        const { children, className, ...attrs } = this.props
+        const { children, className, changeByMouseMove, ...attrs } = this.props
         const classes = classNames(className, 'tab-bar')
 
         return (
             <div className={classes} {...attrs}>
-                <div className="tab-bar-nav">{this.renderNav(children)}</div>
+                <div className="tab-bar-nav">{this.renderNav(children, changeByMouseMove)}</div>
                 <div className="tab-container">
                     {React.Children.map(
                         children,
@@ -55,16 +57,24 @@ class TabBar extends Component {
     }
 
 
-    onChangeActiveTab = (activeTab) => {
-        const { activeTab: currentTab } = this.state
-
-        if (currentTab !== activeTab) {
+    onClick = (activeTab) => {
+        if (this.state.activeTab !== activeTab) {
             this.setState({activeTab: activeTab})
         }
     }
 
+    onMouseOver = (activeTab) => {
+        this.setState({activeTab: activeTab})
+    }
 
-    renderNav = (children = []) => {
+    onMouseOut = (activeTab) => {
+        if (this.state.activeTab === activeTab) {
+            this.setState({activeTab: null})
+        }
+    }
+
+
+    renderNav = (children, changeByMouseMove = false) => {
 
         const { activeTab } = this.state
 
@@ -82,7 +92,10 @@ class TabBar extends Component {
                         key={label}
                         label={label}
                         className={classes}
-                        onChangeActiveTab={e => this.onChangeActiveTab(label)}/>
+                        onClick={ changeByMouseMove ? e => {} : e => this.onClick(label) }
+                        onMouseOver={ changeByMouseMove ? e => this.onMouseOver(label) : e => {} }
+                        onMouseOut={ changeByMouseMove ? e => this.onMouseOut(label) : e => {} }
+                    />
                 )
             }
         )

@@ -48,7 +48,7 @@ class UsersBirthDays extends Component {
         // console.log(usersMap)
 
         return (
-            <TabBar className="vertical">
+            <TabBar className="vertical" changeByMouseMove>
                 {Object.keys(usersMap).map((month) => (
                     <TabBarItem label={month} key={month} navClassName={this.navClassName(usersMap[month].length)}>
                         {this.renderUsers(usersMap[month])}

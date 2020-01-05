@@ -4,14 +4,16 @@ import classNames from 'classnames';
 import * as PropTypes from "prop-types";
 
 
-const TabBarNav = ({ label, className, onChangeActiveTab }) => {
+const TabBarNav = ({ label, className, onClick, onMouseOver, onMouseOut }) => {
 
     const classes = classNames(className, 'nav-item')
 
     return <button
                 type="button"
                 className={classes}
-                onClick={e => onChangeActiveTab(label)}
+                onClick={onClick}
+                onMouseOver={onMouseOver}
+                onMouseOut={onMouseOut}
             >
                 {label}
             </button>
@@ -20,12 +22,16 @@ const TabBarNav = ({ label, className, onChangeActiveTab }) => {
 TabBarNav.propTypes = {
     label: PropTypes.string.isRequired,
     className: PropTypes.string,
-    onChangeActiveTab: PropTypes.func
+    onClick: PropTypes.func,
+    onMouseOver: PropTypes.func,
+    onMouseOut: PropTypes.func
 }
 
 TabBarNav.defaultProps = {
     classNames: '',
-    onChangeActiveTab: () => {}
+    onClick: () => {},
+    onMouseOver: () => {},
+    onMouseOut: () => {}
 }
 
 export default TabBarNav;
