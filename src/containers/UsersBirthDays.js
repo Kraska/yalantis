@@ -39,8 +39,20 @@ class UsersBirthDays extends Component {
     renderUsers(users = []) {
         // console.log(users)
         return <ul>
-            {users.map(({ id, firstName, lastName }) => (<li key={id}>{firstName} {lastName}</li>))}
+            {users.map(
+                ({ id, firstName, lastName, dob }) =>
+                    (<li key={id}>{firstName} {lastName} - {this.formatDate(dob)}</li>)
+            )}
         </ul>
+    }
+
+    formatDate(dateStr) {
+        const options = {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        }
+        return new Date(dateStr).toLocaleString("ru", options)
     }
 
     render() {
@@ -50,7 +62,7 @@ class UsersBirthDays extends Component {
         return (
             <TabBar className="vertical" changeByMouseMove>
                 {Object.keys(usersMap).map((month) => (
-                    <TabBarItem label={month} key={month} navClassName={this.navClassName(usersMap[month].length)}>
+                    <TabBarItem label={month} key={month} navClassName={this.getColor(usersMap[month].length)}>
                         {this.renderUsers(usersMap[month])}
                     </TabBarItem>
                 ))}
@@ -58,7 +70,7 @@ class UsersBirthDays extends Component {
         )
     }
 
-    navClassName(count) {
+    getColor(count) {
         if (count <= 2) return 'grey'
         else if (count > 2 && count <= 6) return 'blue'
         else if (count > 6 && count <= 10) return 'green'
