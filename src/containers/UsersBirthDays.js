@@ -22,15 +22,19 @@ class UsersBirthDays extends Component {
 
     mapByMonth(users) {
         if (users && users.length) {
-            return users
-                .reduce(
-                    (map, user) => {
-                        const { dob } = user
-                        const month = new Date(dob).toLocaleString("ru", {month: 'long'})
-                        return {...map, [month]: map[month] ? [...map[month], user] : [user]}
-                    },
-                    {}
-                )
+
+            return users.reduce(
+                (map, user) => {
+                    const { dob } = user
+                    const month = new Date(dob).toLocaleString("ru", {month: 'long'})
+                    const monthNum = new Date(dob).toLocaleString("ru", {month: 'numeric'})
+
+                    const users = map[monthNum] ? [...map[monthNum].users, user] : [user]
+
+                    return {...map, [monthNum]: {month: month, users: users}}
+                },
+                {}
+            )
         }
         return {}
     }
@@ -61,11 +65,17 @@ class UsersBirthDays extends Component {
 
         return (
             <TabBar className="vertical" changeByMouseMove>
-                {Object.keys(usersMap).map((month) => (
-                    <TabBarItem label={month} key={month} navClassName={this.getColor(usersMap[month].length)}>
-                        {this.renderUsers(usersMap[month])}
-                    </TabBarItem>
-                ))}
+                {Object.keys(usersMap).map((monthNum) => {
+
+                    const { month } = usersMap[monthNum]
+                    const navClassName = this.getColor(usersMap[monthNum].users.length)
+
+                    return (
+                        <TabBarItem label={month} key={monthNum} navClassName={navClassName}>
+                            {this.renderUsers(usersMap[monthNum].users)}
+                        </TabBarItem>
+                    )
+                })}
             </TabBar>
         )
     }
