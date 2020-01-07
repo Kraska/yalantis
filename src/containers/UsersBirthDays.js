@@ -7,11 +7,11 @@ import './UsersBirthDays.css'
 
 import * as PropTypes from "prop-types";
 
-const PATH = 'https://yalantis-react-school.herokuapp.com/api/task0/users'
 
 class UsersBirthDays extends Component {
 
     static propTypes = {
+        apiUrl: PropTypes.string.isRequired,
         className: PropTypes.string,
         getColor: PropTypes.func
     }
@@ -26,7 +26,7 @@ class UsersBirthDays extends Component {
     }
 
     componentDidMount() {
-        fetch(PATH)
+        fetch(this.props.apiUrl)
             .then(res => res.json())
             .then(users => this.setState({ users: users }))
 

@@ -11,7 +11,10 @@ const getColor = (count) => {
 }
 
 function App() {
-  return <UsersBirthDays className="vertical" getColor={getColor} />;
+  return <UsersBirthDays
+      apiUrl="https://yalantis-react-school.herokuapp.com/api/task0/users"
+      className="vertical"
+      getColor={getColor} />;
 }
 
 export default App;
