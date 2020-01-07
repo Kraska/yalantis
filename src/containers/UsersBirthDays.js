@@ -2,12 +2,24 @@ import React, {Component} from "react";
 
 import TabBar from "../components/tabbar/TabBar";
 import TabBarItem from "../components/tabbar/TabBarItem";
+import UsersList from "../components/user/UsersList";
 import './UsersBirthDays.css'
 
+import * as PropTypes from "prop-types";
 
 const PATH = 'https://yalantis-react-school.herokuapp.com/api/task0/users'
 
 class UsersBirthDays extends Component {
+
+    static propTypes = {
+        className: PropTypes.string,
+        getColor: PropTypes.func
+    }
+
+    static defaultProps = {
+        className: '',
+        getColor: () => {}
+    }
 
     state = {
         users: []
@@ -40,51 +52,25 @@ class UsersBirthDays extends Component {
     }
 
 
-    renderUsers(users = []) {
-        // console.log(users)
-        return <ul>
-            {users.map(
-                ({ id, firstName, lastName, dob }) =>
-                    (<li key={id}>{firstName} {lastName} - {this.formatDate(dob)}</li>)
-            )}
-        </ul>
-    }
-
-    formatDate(dateStr) {
-        const options = {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric'
-        }
-        return new Date(dateStr).toLocaleString("ru", options)
-    }
-
     render() {
         const usersMap = this.mapByMonth(this.state.users)
-        // console.log(usersMap)
+        const { className, getColor } = this.props
 
         return (
-            <TabBar className="vertical" changeByMouseMove>
+            <TabBar className={className} changeByMouseMove>
                 {Object.keys(usersMap).map((monthNum) => {
 
                     const { month } = usersMap[monthNum]
-                    const navClassName = this.getColor(usersMap[monthNum].users.length)
+                    const navClassName = getColor(usersMap[monthNum].users.length)
 
                     return (
                         <TabBarItem label={month} key={monthNum} navClassName={navClassName}>
-                            {this.renderUsers(usersMap[monthNum].users)}
+                            <UsersList users={usersMap[monthNum].users} />
                         </TabBarItem>
                     )
                 })}
             </TabBar>
         )
-    }
-
-    getColor(count) {
-        if (count <= 2) return 'grey'
-        else if (count > 2 && count <= 6) return 'blue'
-        else if (count > 6 && count <= 10) return 'green'
-        else return 'red'
     }
 }
 
