@@ -1,9 +1,14 @@
 import React from "react";
-import UserInfo from "./UserInfo";
 import * as PropTypes from "prop-types";
+import classNames from "classnames";
 
-const UsersList = ({ users, ...attrs }) => {
-    return <ul {...attrs}>{users.map(user => <UserInfo user={user} tag="li" key={user.id} />)}</ul>
+import UserInfo from "./UserInfo";
+import "./UsersList.css";
+
+
+const UsersList = ({ users, className, ...attrs }) => {
+    const classes = classNames('users-list', className)
+    return <ul className={classes} {...attrs}>{users.map(user => <UserInfo user={user} tag="li" key={user.id} />)}</ul>
 }
 
 UsersList.propTypes = {

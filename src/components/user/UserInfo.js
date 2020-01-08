@@ -1,5 +1,9 @@
 import React from "react";
 import * as PropTypes from "prop-types";
+import classNames from "classnames";
+
+import "./UserInfo.css";
+
 
 const dfOptions = {
     year: 'numeric',
@@ -8,10 +12,17 @@ const dfOptions = {
 }
 
 
-const UserInfo = ({ user: { firstName, lastName, dob }, tag, ...attrs }) => {
+const UserInfo = ({ user: { firstName, lastName, dob }, tag, className, ...attrs }) => {
     const Tag = tag
     const day = new Date(dob).toLocaleString("ru", dfOptions)
-    return (<Tag {...attrs}>{firstName} {lastName} - {day}</Tag>)
+    const classes = classNames('user-info', className)
+
+    return (
+        <Tag className={classes} {...attrs}>
+            <span className="user-name">{firstName} {lastName}</span>
+            <span className="date">{day}</span>
+        </Tag>
+    )
 }
 
 UserInfo.propTypes = {
