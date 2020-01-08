@@ -94,7 +94,7 @@ class TabBar extends Component {
                         className={classes}
                         onClick={ changeByMouseMove ? e => {} : e => this.onClick(label) }
                         onMouseOver={ changeByMouseMove ? e => this.onMouseOver(label) : e => {} }
-                        onMouseOut={ changeByMouseMove ? e => this.onMouseOut(label) : e => {} }
+                        // onMouseOut={ changeByMouseMove ? e => this.onMouseOut(label) : e => {} }
                     />
                 )
             }
